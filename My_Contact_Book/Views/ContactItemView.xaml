@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="My_Contact_Book.Views.ContactItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:My_Contact_Book.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="75" d:DesignWidth="220">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Image Width="90" Height="75" Grid.Column="0" Margin="10" Source="{Binding ImagePath, 
+            FallbackValue={StaticResource DefaultContactImg}, 
+            TargetNullValue={StaticResource DefaultContactImg}}"/>
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <Label Content="{Binding Name, FallbackValue=N/A, TargetNullValue=N/A}" FontSize="16"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

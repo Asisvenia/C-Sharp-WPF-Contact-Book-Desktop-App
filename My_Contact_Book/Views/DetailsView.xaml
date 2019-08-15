@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="My_Contact_Book.Views.DetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:My_Contact_Book.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="450" Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+    <StackPanel Grid.Row="0" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <!--Name-->
+                    <Label FontWeight="ExtraBold" FontFamily="Verdana" FontSize="16" Content="{Binding SelectedContact.Name, 
+                    FallbackValue=N/A, TargetNullValue=N/A}" HorizontalAlignment="Center" Visibility="{Binding IsDisplayMode, Converter={StaticResource BoolToVisiblityConverter}}"/>
+                    <!--Name Box-->
+                    <TextBox x:Name="nameBox" Margin="5" Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}" Width="160" Height="30" HorizontalAlignment="Center" 
+                             FontWeight="ExtraBold" FontFamily="Verdana" FontSize="16" Text="{Binding SelectedContact.Name, Mode=TwoWay}"
+                             Background="{Binding ElementName=nameBox, Path=IsFocused, Converter={StaticResource BoolToFocusConverter}}">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="6" />
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                    <!--Is Favourite?-->
+                    <CheckBox Command="{Binding UpdateFavouritesCommand}" Style="{StaticResource FavouriteCheckbox}" IsChecked="{Binding SelectedContact.IsFavourite, Mode=TwoWay}" 
+                              HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 2 0 0"/>
+                </StackPanel>
+            </StackPanel>
+            <Grid Width="110" Height="110" HorizontalAlignment="Left">
+                <!--Image-->
+                <Image Width="110" Height="110" Source="{Binding SelectedContact.ImagePath, 
+                                                        FallbackValue={StaticResource DefaultContactImg}, 
+                                                        TargetNullValue={StaticResource DefaultContactImg}}"
+                                                            />
+                <!--Browse Button-->
+                <Button Content="Browse" Style="{StaticResource BrowseBtn}" Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Command="{Binding BrowseCommand}"/>
+            </Grid>
+        </StackPanel>
+        
+        <!--Cancel Button-->
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+            <Button x:Name="CancelBtn" Cursor="Hand" Style="{StaticResource CancelIconBtn}" 
+                    Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}" 
+                    HorizontalAlignment="Left" Margin="-50 0 0 0" Command="{Binding CancelEditingCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://siteoforigin:,,,/Resources/cancelIcon.png" Width="33" Height="33" />
+                        <Label VerticalAlignment="Center" FontWeight="ExtraBold" Content="Cancel"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <!--Save Button-->
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Button x:Name="SaveBtn" Cursor="Hand" Style="{StaticResource SaveIconBtn}" 
+                    Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}"
+                    Command="{Binding SaveCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="pack://siteoforigin:,,,/Resources/saveIcon.png"/>
+                        <Label VerticalAlignment="Center" FontWeight="ExtraBold" Content="Save"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <!--Phone Numbers-->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="4 8 1 1">
+            <StackPanel>
+                <Border Style="{StaticResource DetailBorder}">
+                    <Label Style="{StaticResource DetailHead}" Content="Phone Numbers:"/>
+                </Border>
+                <StackPanel>
+                   <!--Home Number-->
+                    <Label Style="{StaticResource DetailLabel}" Content="Home:"/>
+                    <Label Style="{StaticResource DetailContent}" Content="{Binding SelectedContact.PhoneNumbers[0], FallbackValue=None}" Visibility="{Binding IsDisplayMode, Converter={StaticResource BoolToVisiblityConverter}}"/>
+                    <!--Home Number Box-->
+                    <TextBox x:Name="homeNum" Style="{StaticResource DetailBoxContent}" Text="{Binding SelectedContact.PhoneNumbers[0]}"
+                             Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}"
+                             Background="{Binding ElementName=homeNum, Path=IsFocused, Converter={StaticResource BoolToFocusConverter}}"/>
+                    <!--Business Number-->
+                    <Label Style="{StaticResource DetailLabel}" Content="Cell:"/>
+                    <Label Style="{StaticResource DetailContent}" Content="{Binding SelectedContact.PhoneNumbers[1], FallbackValue=None}" Visibility="{Binding IsDisplayMode, Converter={StaticResource BoolToVisiblityConverter}}"/>
+                    <!--Business Number Box-->
+                    <TextBox x:Name="bussName" Style="{StaticResource DetailBoxContent}" Text="{Binding SelectedContact.PhoneNumbers[1], Mode=TwoWay}"
+                             Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}"
+                             Background="{Binding ElementName=bussName, Path=IsFocused, Converter={StaticResource BoolToFocusConverter}}"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <!--Email and Address-->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="4 8 1 1">
+            <StackPanel>
+                <Border Style="{StaticResource DetailBorder}">
+                    <Label Style="{StaticResource DetailHead}" Content="E-Mail:"/>
+                </Border>
+                <Label Style="{StaticResource DetailContent}" Content="{Binding SelectedContact.Mail, FallbackValue=None}" Visibility="{Binding IsDisplayMode, Converter={StaticResource BoolToVisiblityConverter}}"/>
+                <!--Email Box-->
+                <TextBox x:Name="mailBox" Style="{StaticResource DetailBoxContent}" Text="{Binding SelectedContact.Mail, Mode=TwoWay}"
+                         Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}" Width="225" Margin="5"
+                         Background="{Binding ElementName=mailBox, Path=IsFocused, Converter={StaticResource BoolToFocusConverter}}"/>
+                <!--Address-->
+                <Border Style="{StaticResource DetailBorder}" Margin="4 8 1 1">
+                    <Label Style="{StaticResource DetailHead}" Content="Address:"/>
+                </Border>
+                <Label Style="{StaticResource DetailContent}" Content="{Binding SelectedContact.Address, FallbackValue=None}" Visibility="{Binding IsDisplayMode, Converter={StaticResource BoolToVisiblityConverter}}"/>
+                <!--Address Box-->
+                <TextBox x:Name="addressBox" Style="{StaticResource DetailBoxContent}" Text="{Binding SelectedContact.Address, Mode=TwoWay}"
+                         Visibility="{Binding IsEditMode, Converter={StaticResource BoolToVisiblityConverter}}" Width="225" Margin="5"
+                         Background="{Binding ElementName=addressBox, Path=IsFocused, Converter={StaticResource BoolToFocusConverter}}"/>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
