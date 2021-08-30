@@ -1,7 +1,10 @@
 # About
-* This repository contains a simple app that implements **MVVM architecture**.
+* This repository contains a simple app which is based on **WPF** and **C#** that implements **MVVM architecture**.
 * Main purpose of this desktop app is to manage your contact book list, add or remove person and update contact information.
-* **WPF** and **C#** language used. To save data I used **Newtonsoft.Json** to serialize and unserialize saved data on the local disk.
+* To save data I used **Newtonsoft.Json** to serialize and unserialize saved data on the local disk.
+
+![Contact_Book01](https://user-images.githubusercontent.com/39779689/131323945-98fa7289-5991-4223-b4e0-9af1a4abc8ac.png)
+![Contact_Book02](https://user-images.githubusercontent.com/39779689/131323730-b1db10f1-e2a4-4f79-93a5-90958b008847.png)
 
 # Getting Started
 * Be sure to at least have .NET 4.6.1 version on your computer.
